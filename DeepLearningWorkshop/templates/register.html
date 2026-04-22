@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Signature Auth</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <h1>Create Account</h1>
+            <p class="subtitle">Enter a username and select a signature to register</p>
+            
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <div class="upload-container" id="drop-zone">
+                        <input type="file" id="sig-upload" accept="image/*" hidden>
+                        <i class="icon-upload">✍️</i>
+                        <p>Upload Signature Image</p>
+                        <img id="selected-preview" alt="Preview">
+                    </div>
+
+                    <button type="button" class="help-btn" id="help-btn">Need a test signature? 💡</button>
+                    
+                    <div id="tester-section" style="display: none;">
+                        <p class="test-notice">For testing purposes, use these fresh signatures:</p>
+                        <div class="signature-gallery visible">
+                            {% if signatures %}
+                                {% for sig in signatures %}
+                                    <div class="sig-item" data-filename="{{ sig }}" data-source="new">
+                                        <img src="{{ url_for('static', filename='signatures/new_users/' + sig) }}" alt="Signature">
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" id="submit-btn" disabled>Register Account</button>
+                <div id="message"></div>
+            </form>
+
+            <div class="nav-links">
+                Already have an account? <a href="{{ url_for('login') }}">Login here</a>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

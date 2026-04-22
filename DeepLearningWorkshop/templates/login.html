@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Signature Auth</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <h1>Signature Login</h1>
+            <p class="subtitle">Upload your signature to authenticate</p>
+            
+            <form id="login-form">
+                <div class="form-group">
+                    <div class="upload-container" id="drop-zone">
+                        <input type="file" id="sig-upload" accept="image/*" hidden>
+                        <i class="icon-upload">📁</i>
+                        <p>Click or Drag Signature Image</p>
+                        <img id="selected-preview" alt="Preview">
+                    </div>
+
+                    <button type="button" class="help-btn" id="help-btn">Help for Testers? 💡</button>
+                    
+                    <div id="tester-section" style="display: none;">
+                        <p class="test-notice">Choose from already registered signatures:</p>
+                        <div class="signature-gallery visible">
+                            {% if signatures %}
+                                {% for sig in signatures %}
+                                    <div class="sig-item" data-filename="{{ sig }}" data-source="registered">
+                                        <img src="{{ url_for('static', filename='signatures/registered/' + sig) }}" alt="Signature">
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <p class="test-notice" style="margin-top: 1rem; color: var(--danger);">Or test robustness with Forged Signatures:</p>
+                        <div class="signature-gallery visible">
+                            {% if forged_signatures %}
+                                {% for sig in forged_signatures %}
+                                    <div class="sig-item" data-filename="{{ sig }}" data-source="forged">
+                                        <img src="{{ url_for('static', filename='signatures/forged_registered/' + sig) }}" alt="Forged Signature">
+                                    </div>
+                                {% endfor %}
+                            {% else %}
+                                <p style="grid-column: 1/-1; text-align: center; color: var(--text-secondary); padding: 1rem;">
+                                    No forged signatures found in /static/signatures/forged_registered/
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" id="submit-btn" disabled>Identify & Login</button>
+                <div id="message"></div>
+            </form>
+
+            <div class="nav-links">
+                Don't have an account? <a href="{{ url_for('register') }}">Register here</a>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

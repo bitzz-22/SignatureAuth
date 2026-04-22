@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Signature Auth</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .welcome-box {
+            text-align: center;
+        }
+        .user-badge {
+            display: inline-block;
+            margin: 1.5rem 0;
+            padding: 0.5rem 1.5rem;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid var(--accent-color);
+            border-radius: 2rem;
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 1.25rem;
+        }
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+            margin-top: 2rem;
+        }
+        .logout-btn:hover {
+            background: var(--danger);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card welcome-box">
+            <h1>Success!</h1>
+            <p class="subtitle">You have been identified and logged in.</p>
+            
+            <div class="user-badge">
+                Welcome, {{ username }}
+            </div>
+            
+            <p style="color: var(--text-secondary); line-height: 1.6;">
+                The system analyzed your signature's unique features, generated a 128-dimensional embedding, 
+                and found the closest match in the secure database using Euclidean distance.
+            </p>
+
+            <a href="{{ url_for('logout') }}" style="text-decoration: none;">
+                <button class="logout-btn">Log Out</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
