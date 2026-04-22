@@ -9,9 +9,11 @@ from model_wrapper import SignatureModel
 
 st.set_page_config(page_title="Signature Auth", layout="centered", page_icon="✍️")
 
-DB_PATH = 'users.json'
-MODEL_PATH = 'best_model.keras'
-UPLOAD_FOLDER = 'static/uploads'
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+DB_PATH = os.path.join(BASE_DIR, 'users.json')
+MODEL_PATH = os.path.join(BASE_DIR, 'best_model.keras')
+UPLOAD_FOLDER = os.path.join(BASE_DIR, 'static/uploads')
 
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
@@ -87,7 +89,7 @@ else:
         # Test Galleries
         with st.expander("Help for Testers? 💡"):
             st.write("**Genuine Signatures**")
-            reg_dir = 'static/signatures/registered'
+            reg_dir = os.path.join(BASE_DIR, 'static', 'signatures', 'registered')
             reg_files = [f for f in os.listdir(reg_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg'))] if os.path.exists(reg_dir) else []
             
             cols = st.columns(5)
@@ -103,7 +105,7 @@ else:
             
             st.write("---")
             st.markdown("**Test Robustness with Forged Signatures**")
-            forged_dir = 'static/signatures/forged_registered'
+            forged_dir = os.path.join(BASE_DIR, 'static', 'signatures', 'forged_registered')
             forged_files = [f for f in os.listdir(forged_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg'))] if os.path.exists(forged_dir) else []
             
             cols_f = st.columns(5)
@@ -162,7 +164,7 @@ else:
         
         with st.expander("Need a test signature? 💡"):
             st.write("For testing purposes, use these fresh signatures:")
-            new_dir = 'static/signatures/new_users'
+            new_dir = os.path.join(BASE_DIR, 'static', 'signatures', 'new_users')
             new_files = [f for f in os.listdir(new_dir) if f.lower().endswith(('.png', '.jpg', '.jpeg'))] if os.path.exists(new_dir) else []
             
             cols = st.columns(5)
@@ -207,7 +209,7 @@ else:
                             
                             final_filename = original_filename
                             if is_uploaded:
-                                registered_dir = 'static/signatures/registered'
+                                registered_dir = os.path.join(BASE_DIR, 'static', 'signatures', 'registered')
                                 if not os.path.exists(registered_dir):
                                     os.makedirs(registered_dir)
                                 new_sig_path = os.path.join(registered_dir, final_filename)
